@@ -3,11 +3,18 @@
 cp /etc/resolv.conf /tmp/resolv.conf
 su -c 'umount /etc/resolv.conf'
 cp /tmp/resolv.conf /etc/resolv.conf
-sed -i 's/DAEMON_ARGS=.*/DAEMON_ARGS=""/' /etc/init.d/expressvpn
-service expressvpn restart
-/usr/bin/expect /tmp/expressvpnActivate.sh
-expressvpn preferences set auto_connect true
-expressvpn preferences set preferred_protocol $PREFERRED_PROTOCOL
-expressvpn preferences set lightway_cipher $LIGHTWAY_CIPHER
-expressvpn connect $SERVER
+
+nohup /opt/expressvpn/bin/expressvpn-daemon 2>&1 >/dev/null &
+until expressvpnctl status >/dev/null 2>&1; do
+  sleep 1
+done
+
+expressvpnctl background enable
+expressvpnctl set networklock true
+expressvpnctl set auto_connect true
+expressvpnctl set region $REGION
+expressvpnctl set protocol $PROTOCOL
+expressvpnctl login <(echo "$ACTIVATION_CODE")
+expressvpnctl connect $SERVER
+
 exec "$@"

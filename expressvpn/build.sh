@@ -15,7 +15,7 @@ echo "${build_id}"
 echo ""
 
 echo "~> Get the expressvpn version..."
-expressvpn_version="$(grep 'ARG APP' Dockerfile | cut -d"_" -f2)"
+expressvpn_version="$(grep 'ARG APP' Dockerfile | cut -d"_" -f1 | cut -d"-" -f4)"
 echo "${expressvpn_version}"
 echo ""
 
@@ -59,7 +59,7 @@ docker run \
     /bin/bash
 echo ""
 
-echo "~> Wait expresspvn activation (20s)..."
+echo "~> Wait expresspvn init (20s)..."
 for i in {1..20}
 do
     sleep 1
@@ -69,7 +69,7 @@ echo ""
 
 echo ""
 echo "~> Check expressvpn status..."
-status="$(docker exec -it expressvpn-rc expressvpn status)"
+status="$(docker exec -it expressvpn-rc expressvpnctl status)"
 if [[ "$status" == *"Connected to"* ]]
 then
     echo "$status" | grep 'Connected to' 
