@@ -1,8 +1,7 @@
 
 # Run expressvpn in a container
 
-FROM debian:trixie-slim AS expressvpn-base
-
+FROM debian:trixie-slim
 LABEL maintainer="benjamin@polkaned.net"
 
 ENV ACTIVATION_CODE=code
@@ -25,7 +24,3 @@ RUN /usr/bin/expect /tmp/expressvpnInstall.sh \
 
 COPY entrypoint.sh /tmp/entrypoint.sh
 ENTRYPOINT ["/bin/bash", "/tmp/entrypoint.sh"]
-
-FROM expressvpn-base AS expressvpn-wo-iptables
-
-RUN apt-get remove -y iptables
