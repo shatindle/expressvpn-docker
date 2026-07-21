@@ -9,7 +9,7 @@ ENV ACTIVATION_CODE=code
 ENV REGION=smart
 ENV PROTOCOL=auto
 
-ARG APP=expressvpn-linux-universal-5.1.0.12141_release.run
+ARG APP=expressvpn-linux-universal-14.2.0.13656_release.run
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libterm-readkey-perl ca-certificates wget expect iproute2 iputils-ping \
