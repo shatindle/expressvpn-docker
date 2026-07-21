@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl procps libnm0 iptables psmisc libatomic1 libglib2.0-0 libbrotli1 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -q "https://www.expressvpn.works/clients/linux/${APP}" -O /tmp/${APP}
+RUN wget -q "https://www.expressvpn.com/clients/linux/${APP}" -O /tmp/${APP}
 COPY expressvpnInstall.sh /tmp/expressvpnInstall.sh
 RUN /usr/bin/expect /tmp/expressvpnInstall.sh \
     && rm -rf /tmp/${APP} \
